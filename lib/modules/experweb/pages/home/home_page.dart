@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         title: const CustomText(
-            text: "Olá, Daniel Becker",
+            text: "Olá, Augusto Batista",
             color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
