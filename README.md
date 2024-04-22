@@ -22,9 +22,9 @@
 ## The Application
 
 <h3 align="center">
-    <img alt="login" src="github/assets/login.png" width="20%">
+    <img alt="login" src="github/assets/login.png" width="19%">
     <img alt="login error" src="github/assets/login_error.png" width="20%">
-    <img alt="calendar" src="github/assets/calendar.png" width="20%">
+    <img alt="calendar" src="github/assets/calendar.png" width="19%">
     <img alt="details" src="github/assets/details.png" width="20%">
 </h3>
 
