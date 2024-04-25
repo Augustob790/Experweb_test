@@ -1,18 +1,18 @@
-class Schedule {
-  final String id;
-  final DateTime scheduleTo;
-  final String assessment;
+class ScheduleModel {
+  int? id;
+  final String scheduleTo;
+  final String dateSchedule;
   final String victimName;
   final int professionalId;
   final String city;
   final String state;
   final String street;
-  final int number;
+  final String number;
 
-  Schedule({
-    required this.id,
+  ScheduleModel( {
+    this.id,
+    required this.dateSchedule,
     required this.scheduleTo,
-    required this.assessment,
     required this.victimName,
     required this.professionalId,
     required this.city,
@@ -21,17 +21,31 @@ class Schedule {
     required this.number,
   });
 
-  factory Schedule.fromJson(Map<String, dynamic> json) {
-    return Schedule(
-      id: json['id'] ?? "",
-      scheduleTo: DateTime.parse(json['schedule_to']),
-      assessment: json['assessment'] ?? "",
-      victimName: json['victim_name'] ?? "",
-      professionalId: json['professional_id'] ?? "",
+  factory ScheduleModel.fromJson(Map<String, dynamic> json) {
+    return ScheduleModel(
+      id: json['id'],
+      victimName: json['victimName'] ?? "",
+      dateSchedule:json['dateSchedule'] ?? "",
+      scheduleTo: json['scheduleTo'] ?? "",
+      professionalId: json['professionalId'] ?? 0,
       city: json['city'] ?? "",
       state: json['state'] ?? "",
       street: json['street'] ?? "",
       number: json['number'] ?? "",
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'scheduleTo': scheduleTo,
+      'victimName': victimName,
+      'dateSchedule': dateSchedule,
+      'professionalId': professionalId,
+      'city': city,
+      'state': state,
+      'street': street,
+      'number': number,
+    };
   }
 }

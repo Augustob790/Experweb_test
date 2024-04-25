@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../const/api.dart';
 import '../../const/image_constant.dart';
+import '../../helpers/helpers.dart';
 import '../../widgets/custom_image_view.dart';
 
 class SplashPage extends StatefulWidget {
@@ -20,7 +21,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   verificationAuth() async {
-    Modular.to.pushReplacementNamed('/auth/login');
+    Modular.to.pushReplacementNamed('/experweb/home');
   }
 
   @override
@@ -34,7 +35,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: const Color.fromRGBO(11, 28, 43, 1),
+        color: Helpers.colorPrimary,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

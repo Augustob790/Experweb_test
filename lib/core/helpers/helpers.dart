@@ -1,4 +1,4 @@
-import '../../modules/experweb/domain/model/user_model.dart';
+import 'package:flutter/material.dart';
 
 class Helpers {
   static final monthsName = {
@@ -16,38 +16,29 @@ class Helpers {
     12: 'Dezembro 2024',
   };
 
-  static final List<User> user = [
-    User(
-      horario: "14:00",
-      nome: 'Augusto Batista',
-      rua: 'Rua X',
-      estado: 'Tocantins',
-      cidade: 'Palmas',
-      numero: 10,
-    ),
-    User(
-      horario: "14:30",
-      nome: 'José Bezerra',
-      rua: 'Rua Z',
-      estado: 'Tocantins',
-      cidade: 'Palmas',
-      numero: 11,
-    ),
-    User(
-      horario: "15:00",
-      nome: 'Mateus Souza',
-      rua: 'Rua Y',
-      estado: 'Tocantins',
-      cidade: 'Palmas',
-      numero: 12,
-    ),
-    User(
-      horario: "15:30",
-      nome: 'Daniel Becker',
-      rua: 'Rua A',
-      estado: 'Tocantins',
-      cidade: 'Palmas',
-      numero: 13,
-    ),
-  ];
+  static const colorPrimary = Color.fromRGBO(11, 28, 43, 1);
+  static const colorEdit = Color.fromARGB(247, 15, 40, 139);
+
+  static String formatDateForBRDate(DateTime dateTime) {
+    List<String> months = [
+      "jan.",
+      "fev.",
+      "mar.",
+      "abr.",
+      "mai.",
+      "jun.",
+      "jul.",
+      "ago.",
+      "set.",
+      "out.",
+      "nov.",
+      "dez."
+    ];
+
+    String day = dateTime.day.toString();
+    String month = months[dateTime.month - 1]; // Adjusting month index
+    String year = dateTime.year.toString();
+
+    return "$day de $month de $year";
+  }
 }

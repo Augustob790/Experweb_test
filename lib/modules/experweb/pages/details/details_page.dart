@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../../../core/helpers/helpers.dart';
+import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_text.dart';
-import '../../domain/model/user_model.dart';
+import '../../domain/model/schedule_model.dart';
 
 class DetailsPage extends StatelessWidget {
-  const DetailsPage({super.key, this.user});
+  const DetailsPage({super.key, required this.agenda});
 
-  final User? user;
+  final ScheduleModel agenda;
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(11, 28, 43, 1),
+      backgroundColor: Helpers.colorPrimary,
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(43, 60, 79, 1),
         leading: IconButton(
@@ -25,7 +28,7 @@ class DetailsPage extends StatelessWidget {
           ),
         ),
         title: CustomText(
-            text: "${user?.horario} - ${user?.nome}",
+            text: "${agenda.scheduleTo} - ${agenda.victimName}",
             color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -39,7 +42,7 @@ class DetailsPage extends StatelessWidget {
           color: Color.fromRGBO(43, 60, 79, 1),
         ),
         width: size.width,
-        height: 170,
+        height: size.height,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -47,7 +50,7 @@ class DetailsPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: CustomText(
-                text: "Cidade: ${user?.cidade}",
+                text: "Cidade: ${agenda.city}",
                 color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -57,7 +60,7 @@ class DetailsPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: CustomText(
-                text: "Estado: ${user?.estado}",
+                text: "Estado: ${agenda.state}",
                 color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -67,7 +70,7 @@ class DetailsPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: CustomText(
-                text: "Rua: ${user?.rua}",
+                text: "Rua: ${agenda.street}",
                 color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -77,7 +80,7 @@ class DetailsPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: CustomText(
-                text: "Número: ${user?.numero}",
+                text: "Número: ${agenda.number}",
                 color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -94,7 +97,36 @@ class DetailsPage extends StatelessWidget {
                     color: Colors.white,
                     size: 30,
                   )),
-            )
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: CustomButtonStandard(
+                    onTap: () {
+                      
+                    },
+                    color: Helpers.colorEdit,
+                    isLoading: true,
+                    text: "Editar",
+                    height: 40,
+                    width: 100,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: CustomButtonStandard(
+                    onTap: () {},
+                    color: Colors.red,
+                    isLoading: true,
+                    text: "Excluir",
+                    height: 40,
+                    width: 100,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

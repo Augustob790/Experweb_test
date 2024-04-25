@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../modules/experweb/domain/model/user_model.dart';
+
+import '../../modules/experweb/domain/model/schedule_model.dart';
 import 'custom_text.dart';
 
 class CustomListTile extends StatelessWidget {
-  const CustomListTile({super.key, this.onTap, required this.user});
-  final User user;
+  const CustomListTile({super.key, this.onTap, required this.agenda});
+  final ScheduleModel agenda;
   final Function()? onTap;
 
   @override
@@ -24,14 +25,14 @@ class CustomListTile extends StatelessWidget {
               width: 10,
             ),
             CustomText(
-              text: '${user.horario} - ',
+              text: '${agenda.scheduleTo} - ',
               color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 15,
               height: 0.13,
             ),
             CustomText(
-              text: user.nome,
+              text: agenda.victimName,
               color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 15,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../core/const/image_constant.dart';
+import '../../../../core/helpers/helpers.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 import '../../../../core/widgets/custom_snackbar.dart';
@@ -33,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Container(
         height: size.height,
-        color: const Color.fromRGBO(11, 28, 43, 1),
+        color: Helpers.colorPrimary,
         child: SingleChildScrollView(
           child: Column(
             children: [
