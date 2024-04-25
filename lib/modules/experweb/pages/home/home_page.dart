@@ -1,13 +1,17 @@
 import 'package:experweb_app/core/widgets/custom_text.dart';
+import 'package:experweb_app/modules/auth/presentation/store/auth_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/widgets/custom_calendar.dart';
 import '../../../../core/widgets/custom_list_tile.dart';
 import '../details/details_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.authStore});
+
+  final AuthStore authStore;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -29,8 +33,8 @@ class _HomePageState extends State<HomePage> {
             color: Colors.white,
           ),
         ),
-        title: const CustomText(
-            text: "Olá, Augusto Batista",
+        title: CustomText(
+            text: "Olá,${widget.authStore.userModel?.name ?? ""}",
             color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,

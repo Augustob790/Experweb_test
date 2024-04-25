@@ -4,13 +4,12 @@ import '../auth/auth_module.dart';
 import 'pages/home/home_page.dart';
 
 class ExperwebModule extends Module {
-
   @override
   List<Module> get imports => [AuthModule()];
 
   @override
   void routes(RouteManager r) {
-    r.child("/home", child: (_) => const HomePage());
+    r.child("/home", child: (_) => HomePage(authStore: Modular.get()));
     super.routes(r);
   }
 }
