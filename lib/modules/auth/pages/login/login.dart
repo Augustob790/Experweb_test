@@ -1,20 +1,34 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
 import '../../../../core/const/image_constant.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 import '../../../../core/widgets/custom_snackbar.dart';
 import '../../../../core/widgets/input_personalized.dart';
+import '../../presentation/store/auth_store.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key, required this.authStore});
 
+  final AuthStore authStore;
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+//Rasheed.Rodriguez16@hotmail.com
+//zKAi7T9AtmzpLqE
+
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final loginFormKey = GlobalKey<FormState>();
-    TextEditingController emailController = TextEditingController();
+    // TextEditingController emailController = TextEditingController();
 
-    TextEditingController passwordController = TextEditingController();
+    // TextEditingController passwordController = TextEditingController();
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
@@ -45,7 +59,7 @@ class LoginPage extends StatelessWidget {
                       child: InputPersonalized(
                         icon: const Icon(Icons.person_outlined,
                             color: Colors.white),
-                        controller: emailController,
+                        controller:  widget.authStore.emailController,
                         labelText: 'E-mail',
                         keyboardType: TextInputType.emailAddress,
                         autovalidateMode: AutovalidateMode.disabled,
@@ -65,7 +79,7 @@ class LoginPage extends StatelessWidget {
                       child: InputPersonalized(
                         icon:
                             const Icon(Icons.key_outlined, color: Colors.white),
-                        controller: passwordController,
+                        controller: widget.authStore.passwordController,
                         labelText: 'Senha',
                         obscureText: true,
                         autovalidateMode: AutovalidateMode.disabled,
@@ -101,15 +115,23 @@ class LoginPage extends StatelessWidget {
                       padding: const EdgeInsets.all(15.0),
                       child: CustomButtonStandard(
                         onTap: () async {
-                          if (loginFormKey.currentState!.validate()) {
+                            if (loginFormKey.currentState!.validate()) {
+                              try {
+                                await widget.authStore.login(widget.authStore.emailController.text,widget.authStore.passwordController.text);
                                 Modular.to.pushReplacementNamed('/experweb/home');
-
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
-                              size: size,
-                              message: 'Usuário e senha inválidos',
+                                widget.authStore.dispose();
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                                  size: size,
+                                  message: '$e',
+                               ));
+                              }
+                            } else {
+                             ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                                size: size,
+                                message: 'Prencha todos os campos!',
                             ));
-                          }
+                            }
                         },
                         color: const Color(0xFF947CCD),
                         isLoading: true,

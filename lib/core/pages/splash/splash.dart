@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../const/api.dart';
 import '../../const/image_constant.dart';
 import '../../widgets/custom_image_view.dart';
 
@@ -25,6 +26,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+    Apis();
     startTimeout();
   }
 
