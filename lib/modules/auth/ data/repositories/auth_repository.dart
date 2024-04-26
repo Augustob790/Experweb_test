@@ -16,12 +16,18 @@ class AuthRepositoryImpl implements AuthRepository {
     String url = 'user?email=$email&pass=$password';
     try {
       final response = await dio.get(url);
-      List<UserModel> userModel = [];
-      for (var satisfactionSurvey in response.data) {
-        userModel.add(UserModel.fromJson(satisfactionSurvey));
+      if (response.statusCode == 200) {
+        List<UserModel> userModel = [];
+        for (var satisfactionSurvey in response.data) {
+          userModel.add(UserModel.fromJson(satisfactionSurvey));
+        }
+        await saveDataUser(userModel.first);
+        return userModel.first;
+      } else if (response.statusCode == 404) {
+        throw "Verifique suas crendencias!";
+      } else {
+        throw "Falha no login. Por favor, tente novamente";
       }
-      await saveDataUser(userModel.first);
-      return userModel.first;
     } on DioException catch (e) {
       if (e.type == DioExceptionType.connectionTimeout ||
           e.type == DioExceptionType.receiveTimeout) {

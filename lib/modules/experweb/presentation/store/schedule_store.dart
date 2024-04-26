@@ -107,6 +107,15 @@ abstract class _ScheduleStoreBase with Store {
     try {
       List<ScheduleModel> schedules = await getAllScheduleUsecase();
       scheduleModelList.clear();
+      eventsList.clear();
+      for (var schedule in schedules) {
+        DateTime dateTime = DateTime.parse(schedule.dateSchedule);
+        if (!eventsList.containsKey(dateTime)) {
+          eventsList[dateTime] = ["Evento"];
+        } else {
+          eventsList[dateTime]!.add("Evento");
+        }
+      }
       scheduleModelList.addAll(schedules);
       isLoading = "sucess";
     } catch (e) {
@@ -148,5 +157,4 @@ abstract class _ScheduleStoreBase with Store {
   void onSelectedCategory(String category) {
     dropdownTimesValue = category;
   }
-
 }

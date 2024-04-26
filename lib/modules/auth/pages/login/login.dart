@@ -81,7 +81,8 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
                       child: InputPersonalized(
-                        icon: const Icon(Icons.key_outlined, color: Colors.white),
+                        icon:
+                            const Icon(Icons.key_outlined, color: Colors.white),
                         controller: widget.authStore.passwordController,
                         labelText: 'Senha',
                         obscureText: true,
@@ -120,14 +121,16 @@ class _LoginPageState extends State<LoginPage> {
                         onTap: () async {
                           if (loginFormKey.currentState!.validate()) {
                             try {
-                              await widget.authStore.login(widget.authStore.emailController.text, widget.authStore.passwordController.text);
-                              Modular.to.pushReplacementNamed('/experweb/home');
+                              await widget.authStore.login(
+                                  widget.authStore.emailController.text,
+                                  widget.authStore.passwordController.text);
                               widget.authStore.dispose();
+                              Modular.to.pushReplacementNamed('/experweb/home');
                             } catch (e) {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(CustomSnackBar(
                                 size: size,
-                                message: '$e',
+                                message: e.toString(),
                               ));
                             }
                           } else {

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/widgets/custom_text.dart';
-
-
 class CustomButtonCreateStandard extends StatelessWidget {
   const CustomButtonCreateStandard({
     super.key,
@@ -13,11 +10,12 @@ class CustomButtonCreateStandard extends StatelessWidget {
     required this.width,
     this.color = Colors.orangeAccent,
     this.margin,
-    this.size = 18.0,
+    this.size = 18.0, required this.icon,
   });
 
   final Function() onTap;
   final String text;
+  final IconData icon;
   final bool isLoading;
   final double height;
   final double width;
@@ -40,12 +38,7 @@ class CustomButtonCreateStandard extends StatelessWidget {
         ),
         child: Center(
           child: isLoading
-              ? CustomText(
-                  text: text,
-                  fontSize: size,
-                  height: 0.08,
-                  fontWeight: FontWeight.w500,
-                )
+              ? Icon(icon,color: Colors.white, size: 20,)
               : Container(
                   height: height,
                   width: width,

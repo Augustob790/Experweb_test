@@ -1,29 +1,30 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, unnecessary_nullable_for_final_variable_declarations, prefer_const_constructors
-import 'package:experweb_app/core/helpers/scaffold_mensseger_ui.dart';
-import 'package:experweb_app/modules/auth/presentation/store/auth_store.dart';
-import 'package:experweb_app/modules/experweb/domain/model/schedule_model.dart';
-import 'package:experweb_app/modules/experweb/presentation/store/schedule_store.dart';
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../core/helpers/scaffold_mensseger_ui.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_text.dart';
 import '../../../../core/widgets/dropdown.dart';
 import '../../../../core/widgets/input_personalized.dart';
-import 'widgets/custom_calendar_create.dart';
+import '../../../auth/presentation/store/auth_store.dart';
+import '../../domain/model/schedule_model.dart';
+import '../../presentation/store/schedule_store.dart';
+import '../edit/widgets/custom_calendar_create.dart';
 
-class AddNewSchudule extends StatefulWidget {
-  const AddNewSchudule(
+class CreateSchedulePage extends StatefulWidget {
+  const CreateSchedulePage(
       {super.key, required this.scheduleStore, required this.authStore});
 
   final ScheduleStore scheduleStore;
   final AuthStore authStore;
 
   @override
-  _AddNewSchuduleState createState() => _AddNewSchuduleState();
+  State<CreateSchedulePage> createState() => _CreateSchedulePageState();
 }
 
-class _AddNewSchuduleState extends State<AddNewSchudule> {
+class _CreateSchedulePageState extends State<CreateSchedulePage> {
   final addNewFormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class _AddNewSchuduleState extends State<AddNewSchudule> {
         backgroundColor: const Color.fromRGBO(43, 60, 79, 1),
         leading: IconButton(
           onPressed: () {
-            Modular.to.pop();
+            Modular.to.pushNamed('/experweb/home');
           },
           icon: const Icon(
             Icons.arrow_back,
@@ -207,19 +208,26 @@ class _AddNewSchuduleState extends State<AddNewSchudule> {
                               try {
                                 await widget.scheduleStore.insert(
                                   ScheduleModel(
-                                    scheduleTo: widget.scheduleStore.dropdownTimesValue,
-                                    dateSchedule: widget.scheduleStore.dateInit.toIso8601String(),
-                                    victimName: widget.scheduleStore.nameController.text,
-                                    professionalId: int.parse(widget.authStore.userModel?.id ?? ""),
-                                    city: widget.scheduleStore.cityController.text,
-                                    state: widget.scheduleStore.stateController.text,
-                                    street: widget.scheduleStore.streetController.text,
-                                    number: widget.scheduleStore.numberController.text,
+                                    scheduleTo:
+                                        widget.scheduleStore.dropdownTimesValue,
+                                    dateSchedule: widget.scheduleStore.dateInit
+                                        .toIso8601String(),
+                                    victimName: widget
+                                        .scheduleStore.nameController.text,
+                                    professionalId: int.parse(
+                                        widget.authStore.userModel?.id ?? ""),
+                                    city: widget
+                                        .scheduleStore.cityController.text,
+                                    state: widget
+                                        .scheduleStore.stateController.text,
+                                    street: widget
+                                        .scheduleStore.streetController.text,
+                                    number: widget
+                                        .scheduleStore.numberController.text,
                                   ),
                                 );
                                 widget.scheduleStore.dispose();
                                 Modular.to.pushNamed('/experweb/home');
-                                MessagesUi().snackUi(context, "Agendado!");
                               } catch (e) {
                                 MessagesUi().snackE(context, e.toString());
                               }

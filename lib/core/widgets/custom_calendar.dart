@@ -19,22 +19,13 @@ class _CustomCalendarState extends State<CustomCalendar> {
   late DateTime _firstDay;
   late DateTime _lastDay;
   late DateTime _focusedDay;
-//late DateTime _selectedDay;
-  //Map<DateTime, List> _eventsList = {};
 
   @override
   void initState() {
     super.initState();
     _focusedDay = DateTime.now();
-// _selectedDay = DateTime.now();
     _firstDay = DateTime.utc(2024, 1, 1);
     _lastDay = DateTime.utc(2024, 12, 31);
-    // _eventsList = {
-    //   DateTime(2024, 4, 5): ['Evento 1'],
-    //   DateTime(2024, 4, 12): ['Evento 2'],
-    //   DateTime(2024, 4, 15): ['Evento 3'],
-    //   DateTime(2024, 4, 17): ['Evento 4']
-    // };
   }
 
   int getHashCode(DateTime key) {

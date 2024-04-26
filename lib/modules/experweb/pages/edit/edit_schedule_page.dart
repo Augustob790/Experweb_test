@@ -28,7 +28,7 @@ class EditNewSchedule extends StatefulWidget {
 }
 
 class _EditNewScheduleState extends State<EditNewSchedule> {
-  final addNewFormKey = GlobalKey<FormState>();
+  final editNewFormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -38,7 +38,7 @@ class _EditNewScheduleState extends State<EditNewSchedule> {
         backgroundColor: const Color.fromRGBO(43, 60, 79, 1),
         leading: IconButton(
           onPressed: () {
-            Modular.to.pop();
+            Modular.to.pushReplacementNamed('/experweb/home');
           },
           icon: const Icon(
             Icons.arrow_back,
@@ -109,7 +109,7 @@ class _EditNewScheduleState extends State<EditNewSchedule> {
                     )),
               ),
               Form(
-                key: addNewFormKey,
+                key: editNewFormKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -207,7 +207,7 @@ class _EditNewScheduleState extends State<EditNewSchedule> {
                       padding: const EdgeInsets.all(30.0),
                       child: CustomButtonStandard(
                           onTap: () async {
-                            if (addNewFormKey.currentState!.validate()) {
+                            if (editNewFormKey.currentState!.validate()) {
                               try {
                                 await widget.scheduleStore.update(
                                   ScheduleModel(
@@ -232,8 +232,7 @@ class _EditNewScheduleState extends State<EditNewSchedule> {
                                 );
                                 widget.scheduleStore.dispose();
                                 await widget.scheduleStore.getAllPeriods();
-                                Modular.to.pushNamedAndRemoveUntil(
-                                    '/experweb/home', (route) => false);
+                                Modular.to.pushNamed('/experweb/home');
                               } catch (e) {
                                 MessagesUi().snackE(context, e.toString());
                               }

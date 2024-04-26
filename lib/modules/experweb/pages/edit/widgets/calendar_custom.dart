@@ -14,7 +14,11 @@ class CustomCalendarWidget extends StatefulWidget {
     super.key,
     required this.onChangedDate,
     required this.child,
-    this.initialDate, this.positionedLeft, this.positionedRight, this.positionedBottom, this.positionedTop,
+    this.initialDate,
+    this.positionedLeft,
+    this.positionedRight,
+    this.positionedBottom,
+    this.positionedTop,
   });
 
   @override
@@ -108,18 +112,37 @@ class _CalendarWidgetState extends State<CustomCalendarWidget>
                   width: 282,
                   child: Material(
                     borderRadius: BorderRadius.circular(5),
-                    color: Colors.white,
+                    color: const Color.fromRGBO(43, 60, 79, 1),
                     child: ClipRRect(
                       child: TableCalendar(
                         locale: 'pt_BR',
                         currentDay: currentDay,
+                        daysOfWeekHeight: 20,
+                        daysOfWeekStyle: const DaysOfWeekStyle(
+                          weekdayStyle: TextStyle(color: Colors.white),
+                          weekendStyle: TextStyle(color: Colors.white),
+                        ),
                         headerStyle: HeaderStyle(
-                          leftChevronIcon: Container(),
-                          rightChevronIcon: Container(),
                           titleCentered: true,
+                          titleTextStyle: const TextStyle(
+                              fontSize: 17.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
                           titleTextFormatter: (date, locale) =>
                               monthsName[date.month]!,
                           formatButtonVisible: false,
+                          leftChevronIcon: Container(),
+                          rightChevronIcon: Container(),
+                        ),
+                        calendarStyle: const CalendarStyle(
+                          markersAlignment: Alignment.topCenter,
+                          defaultTextStyle: TextStyle(color: Colors.white),
+                          weekendTextStyle: TextStyle(color: Colors.white),
+                          markerDecoration: BoxDecoration(
+                              color: Colors.white, shape: BoxShape.circle),
+                          todayDecoration: BoxDecoration(
+                              color: Color.fromARGB(255, 2, 9, 14),
+                              shape: BoxShape.circle),
                         ),
                         onDaySelected: (selectedDay, focusedDay) {
                           setCurrentDay(selectedDay);

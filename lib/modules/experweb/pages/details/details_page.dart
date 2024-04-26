@@ -1,17 +1,14 @@
-// ignore_for_file: use_build_context_synchronously, must_be_immutable
-
 import 'package:experweb_app/modules/auth/presentation/store/auth_store.dart';
-import 'package:experweb_app/modules/experweb/pages/edit/edit_schedule_page.dart';
 import 'package:experweb_app/modules/experweb/presentation/store/schedule_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/widgets/custom_text.dart';
-import '../../../../core/widgets/scaffold_mensseger_ui.dart';
 import '../../domain/model/schedule_model.dart';
-import 'widgets/custom_button_create.dart';
+import '../create/widgets/custom_button_create.dart';
 
+// ignore: must_be_immutable
 class DetailsPage extends StatefulWidget {
   DetailsPage(
       {super.key,
@@ -37,7 +34,7 @@ class _DetailsPageState extends State<DetailsPage> {
         backgroundColor: const Color.fromRGBO(43, 60, 79, 1),
         leading: IconButton(
           onPressed: () {
-            Modular.to.pop();
+            Modular.to.pushReplacementNamed('/experweb/home');
           },
           icon: const Icon(
             Icons.arrow_back,
@@ -59,7 +56,7 @@ class _DetailsPageState extends State<DetailsPage> {
           color: Color.fromRGBO(43, 60, 79, 1),
         ),
         width: size.width,
-        height: size.height,
+        height: size.height / 2.4,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -135,17 +132,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 height: 0.3,
               ),
             ),
-            Center(
-              child: IconButton(
-                  onPressed: () {
-                    Modular.to.pop();
-                  },
-                  icon: const Icon(
-                    Icons.keyboard_arrow_up,
-                    color: Colors.white,
-                    size: 30,
-                  )),
-            ),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -167,15 +154,20 @@ class _DetailsPageState extends State<DetailsPage> {
                           widget.agenda!.street;
                       widget.scheduleStore.numberController.text =
                           widget.agenda!.number;
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditNewSchedule(
-                                id: widget.agenda!.id!,
-                                scheduleStore: widget.scheduleStore,
-                                authStore: widget.authStore)),
+
+                      Modular.to.navigate(
+                        '/experweb/edit',
+                        arguments: widget.agenda!.id!,
                       );
+
+                      // Modular.to.pushReplacementNamed(
+                      //   '/experweb/edit',
+                      //   arguments: {
+                      //     'id': widget.agenda!.id!,
+                      //   },
+                      // );
                     },
+                    icon: Icons.edit,
                     color: Helpers.colorEdit,
                     isLoading: true,
                     text: "Editar",
@@ -189,9 +181,9 @@ class _DetailsPageState extends State<DetailsPage> {
                     onTap: () async {
                       await widget.scheduleStore.delete(widget.agenda!.id!);
                       widget.scheduleStore.getAllPeriods();
-                      MessagesUi().snackUi(context, "Excluido com Sucesso!");
                       Modular.to.pop();
                     },
+                    icon: Icons.delete,
                     color: Colors.red,
                     isLoading: true,
                     text: "Excluir",
@@ -200,6 +192,17 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                 ),
               ],
+            ),
+            Center(
+              child: IconButton(
+                  onPressed: () {
+                    Modular.to.pop();
+                  },
+                  icon: const Icon(
+                    Icons.keyboard_arrow_up,
+                    color: Colors.white,
+                    size: 30,
+                  )),
             ),
           ],
         ),
