@@ -96,13 +96,9 @@ class _CustomCalendarState extends State<CustomCalendar> {
             availableCalendarFormats: const {CalendarFormat.month: 'Month'},
             onDaySelected: (selectedDay, focusedDay) {
               setState(() {
-                // _selectedDay = selectedDay;
                 _focusedDay = focusedDay;
               });
             },
-            //  selectedDayPredicate: (day) {
-            //   return isSameDay(_selectedDay, day);
-            // },
             onPageChanged: (focusedDay) {
               setState(() {
                 _focusedDay = focusedDay;

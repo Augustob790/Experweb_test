@@ -226,8 +226,9 @@ class _CreateSchedulePageState extends State<CreateSchedulePage> {
                                         .scheduleStore.numberController.text,
                                   ),
                                 );
+                                await widget.scheduleStore.getAllPeriods();
                                 widget.scheduleStore.dispose();
-                                Modular.to.pushNamed('/experweb/home');
+                                Navigator.pop(context);
                               } catch (e) {
                                 MessagesUi().snackE(context, e.toString());
                               }

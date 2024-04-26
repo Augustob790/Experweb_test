@@ -7,6 +7,7 @@ import '../../../../core/helpers/helpers.dart';
 import '../../../../core/widgets/custom_text.dart';
 import '../../domain/model/schedule_model.dart';
 import '../create/widgets/custom_button_create.dart';
+import '../edit/edit_schedule_page.dart';
 
 // ignore: must_be_immutable
 class DetailsPage extends StatefulWidget {
@@ -34,7 +35,7 @@ class _DetailsPageState extends State<DetailsPage> {
         backgroundColor: const Color.fromRGBO(43, 60, 79, 1),
         leading: IconButton(
           onPressed: () {
-            Modular.to.pushReplacementNamed('/experweb/home');
+            Modular.to.pop();
           },
           icon: const Icon(
             Icons.arrow_back,
@@ -155,17 +156,15 @@ class _DetailsPageState extends State<DetailsPage> {
                       widget.scheduleStore.numberController.text =
                           widget.agenda!.number;
 
-                      Modular.to.navigate(
-                        '/experweb/edit',
-                        arguments: widget.agenda!.id!,
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditNewSchedule(
+                                  scheduleStore: widget.scheduleStore,
+                                  authStore: widget.authStore,
+                                  id: widget.agenda!.id!,
+                                )),
                       );
-
-                      // Modular.to.pushReplacementNamed(
-                      //   '/experweb/edit',
-                      //   arguments: {
-                      //     'id': widget.agenda!.id!,
-                      //   },
-                      // );
                     },
                     icon: Icons.edit,
                     color: Helpers.colorEdit,

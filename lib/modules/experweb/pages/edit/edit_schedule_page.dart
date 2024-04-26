@@ -3,7 +3,6 @@ import 'package:experweb_app/core/helpers/scaffold_mensseger_ui.dart';
 import 'package:experweb_app/modules/experweb/domain/model/schedule_model.dart';
 import 'package:experweb_app/modules/experweb/presentation/store/schedule_store.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_text.dart';
@@ -38,7 +37,7 @@ class _EditNewScheduleState extends State<EditNewSchedule> {
         backgroundColor: const Color.fromRGBO(43, 60, 79, 1),
         leading: IconButton(
           onPressed: () {
-            Modular.to.pushReplacementNamed('/experweb/home');
+            Navigator.pop(context);
           },
           icon: const Icon(
             Icons.arrow_back,
@@ -232,7 +231,8 @@ class _EditNewScheduleState extends State<EditNewSchedule> {
                                 );
                                 widget.scheduleStore.dispose();
                                 await widget.scheduleStore.getAllPeriods();
-                                Modular.to.pushNamed('/experweb/home');
+                                Navigator.pop(context);
+                                Navigator.pop(context);
                               } catch (e) {
                                 MessagesUi().snackE(context, e.toString());
                               }
@@ -246,7 +246,7 @@ class _EditNewScheduleState extends State<EditNewSchedule> {
                               widget.scheduleStore.isLoading == "isLoading"
                                   ? false
                                   : true,
-                          text: "Cadastrar",
+                          text: "Editar",
                           height: 40,
                           width: size.width / 1.15),
                     ),

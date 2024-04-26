@@ -57,7 +57,6 @@ class CustomDateCalendar extends StatelessWidget {
                   fontSize: fontSize,
                   fontFamily: 'Manrope',
                   fontWeight: FontWeight.w400,
-                  //height: 20.97 / 15,
                 ),
               ),
             ),

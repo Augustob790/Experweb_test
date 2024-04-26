@@ -64,8 +64,7 @@ class _HomePageState extends State<HomePage> {
               child: ListView.separated(
                 itemCount: widget.scheduleStore.scheduleModelList.length,
                 itemBuilder: (context, index) {
-                  final schudule =
-                      widget.scheduleStore.scheduleModelList[index];
+                  final schudule =widget.scheduleStore.scheduleModelList[index];
                   return CustomListTile(
                     agenda: schudule,
                     onTap: () {
@@ -91,7 +90,7 @@ class _HomePageState extends State<HomePage> {
       }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Modular.to.pushReplacementNamed('/experweb/addschedule');
+          Modular.to.pushNamed('/experweb/addschedule');
         },
         backgroundColor: Colors.white, // Cor de fundo do botão
         shape: const CircleBorder(),
