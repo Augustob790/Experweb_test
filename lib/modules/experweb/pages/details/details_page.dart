@@ -147,8 +147,8 @@ class DetailsPage extends StatelessWidget {
                     onTap: () async {
                       await scheduleStore.delete(agenda.id!);
                       scheduleStore.getAllPeriods();
-                      Modular.to.pop();
                       MessagesUi().snackUi(context, "Excluido com Sucesso!");
+                      Navigator.pop(context);
                     },
                     color: Colors.red,
                     isLoading: true,

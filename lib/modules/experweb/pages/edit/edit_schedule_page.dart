@@ -13,7 +13,8 @@ import '../../../auth/presentation/store/auth_store.dart';
 import 'widgets/custom_calendar_create.dart';
 
 class EditNewSchedule extends StatefulWidget {
-  const EditNewSchedule({super.key,
+  const EditNewSchedule(
+      {super.key,
       required this.scheduleStore,
       required this.id,
       required this.authStore});
@@ -231,15 +232,13 @@ class _EditNewScheduleState extends State<EditNewSchedule> {
                                 );
                                 widget.scheduleStore.dispose();
                                 await widget.scheduleStore.getAllPeriods();
-                                Modular.to.pushNamed('/experweb/home');
-                                MessagesUi()
-                                    .snackUi(context, "Editado com sucesso!");
+                                MessagesUi().snackUi(context, "Editado com sucesso!");
+                                Navigator.pop(context);
                               } catch (e) {
                                 MessagesUi().snackE(context, e.toString());
                               }
                             } else {
-                              MessagesUi()
-                                  .snackUi(context, "Prencha todos os campos!");
+                              MessagesUi().snackUi(context, "Prencha todos os campos!");
                             }
                           },
                           color: const Color(0xFF947CCD),

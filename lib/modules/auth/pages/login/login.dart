@@ -28,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final loginFormKey = GlobalKey<FormState>();
     // TextEditingController emailController = TextEditingController();
-
     // TextEditingController passwordController = TextEditingController();
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
