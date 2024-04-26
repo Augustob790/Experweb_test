@@ -1,3 +1,4 @@
+import 'package:experweb_app/core/helpers/helpers.dart';
 import 'package:experweb_app/core/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,8 @@ class DropdownButtonForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
       validator: validator,
+            elevation: 50, 
+      dropdownColor: Helpers.colorPrimary,
       icon: const Icon(
         Icons.keyboard_arrow_down,
         color: Color.fromARGB(143, 157, 157, 157),
@@ -32,12 +35,12 @@ class DropdownButtonForm extends StatelessWidget {
         return DropdownMenuItem<String>(
           value: value,
           child: Padding(
-            padding: const EdgeInsets.only(left: 20.0),
+            padding: const EdgeInsets.only(left:25.0),
             child: CustomText(
               text: value,
               color: Colors.white,
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
               height: 0.3,
             ),
           ),

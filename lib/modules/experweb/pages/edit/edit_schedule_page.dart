@@ -1,6 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, unnecessary_nullable_for_final_variable_declarations, prefer_const_constructors
 import 'package:experweb_app/core/helpers/scaffold_mensseger_ui.dart';
-import 'package:experweb_app/modules/auth/presentation/store/auth_store.dart';
 import 'package:experweb_app/modules/experweb/domain/model/schedule_model.dart';
 import 'package:experweb_app/modules/experweb/presentation/store/schedule_store.dart';
 import 'package:flutter/material.dart';
@@ -10,20 +9,24 @@ import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_text.dart';
 import '../../../../core/widgets/dropdown.dart';
 import '../../../../core/widgets/input_personalized.dart';
+import '../../../auth/presentation/store/auth_store.dart';
 import 'widgets/custom_calendar_create.dart';
 
-class AddNewSchudule extends StatefulWidget {
-  const AddNewSchudule(
-      {super.key, required this.scheduleStore, required this.authStore});
+class EditNewSchedule extends StatefulWidget {
+  const EditNewSchedule({super.key,
+      required this.scheduleStore,
+      required this.id,
+      required this.authStore});
 
   final ScheduleStore scheduleStore;
+  final int id;
   final AuthStore authStore;
 
   @override
-  _AddNewSchuduleState createState() => _AddNewSchuduleState();
+  _EditNewScheduleState createState() => _EditNewScheduleState();
 }
 
-class _AddNewSchuduleState extends State<AddNewSchudule> {
+class _EditNewScheduleState extends State<EditNewSchedule> {
   final addNewFormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -42,7 +45,7 @@ class _AddNewSchuduleState extends State<AddNewSchudule> {
           ),
         ),
         title: CustomText(
-            text: "Adicionar uma consulta",
+            text: "Editar uma agendamento",
             color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -205,21 +208,32 @@ class _AddNewSchuduleState extends State<AddNewSchudule> {
                           onTap: () async {
                             if (addNewFormKey.currentState!.validate()) {
                               try {
-                                await widget.scheduleStore.insert(
+                                await widget.scheduleStore.update(
                                   ScheduleModel(
-                                    scheduleTo: widget.scheduleStore.dropdownTimesValue,
-                                    dateSchedule: widget.scheduleStore.dateInit.toIso8601String(),
-                                    victimName: widget.scheduleStore.nameController.text,
-                                    professionalId: int.parse(widget.authStore.userModel?.id ?? ""),
-                                    city: widget.scheduleStore.cityController.text,
-                                    state: widget.scheduleStore.stateController.text,
-                                    street: widget.scheduleStore.streetController.text,
-                                    number: widget.scheduleStore.numberController.text,
+                                    id: widget.id,
+                                    scheduleTo:
+                                        widget.scheduleStore.dropdownTimesValue,
+                                    dateSchedule: widget.scheduleStore.dateInit
+                                        .toIso8601String(),
+                                    victimName: widget
+                                        .scheduleStore.nameController.text,
+                                    professionalId: int.parse(
+                                        widget.authStore.userModel?.id ?? ""),
+                                    city: widget
+                                        .scheduleStore.cityController.text,
+                                    state: widget
+                                        .scheduleStore.stateController.text,
+                                    street: widget
+                                        .scheduleStore.streetController.text,
+                                    number: widget
+                                        .scheduleStore.numberController.text,
                                   ),
                                 );
                                 widget.scheduleStore.dispose();
+                                await widget.scheduleStore.getAllPeriods();
                                 Modular.to.pushNamed('/experweb/home');
-                                MessagesUi().snackUi(context, "Agendado!");
+                                MessagesUi()
+                                    .snackUi(context, "Editado com sucesso!");
                               } catch (e) {
                                 MessagesUi().snackE(context, e.toString());
                               }

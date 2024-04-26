@@ -73,8 +73,11 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                DetailsPage(agenda: schudule)),
+                            builder: (context) => DetailsPage(
+                                  agenda: schudule,
+                                  scheduleStore: widget.scheduleStore,
+                                  authStore: widget.authStore,
+                                )),
                       );
                     },
                   );
@@ -93,9 +96,8 @@ class _HomePageState extends State<HomePage> {
             context,
             MaterialPageRoute(
                 builder: (context) => AddNewSchudule(
-                      authStore: widget.authStore,
-                      scheduleStore: widget.scheduleStore,
-                    )),
+                    authStore: widget.authStore,
+                    scheduleStore: widget.scheduleStore)),
           );
         },
         backgroundColor: Colors.white, // Cor de fundo do botão

@@ -1,15 +1,27 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:experweb_app/modules/auth/presentation/store/auth_store.dart';
+import 'package:experweb_app/modules/experweb/pages/edit/edit_schedule_page.dart';
+import 'package:experweb_app/modules/experweb/presentation/store/schedule_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../core/helpers/helpers.dart';
-import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_text.dart';
+import '../../../../core/widgets/scaffold_mensseger_ui.dart';
 import '../../domain/model/schedule_model.dart';
+import 'widgets/custom_button_create.dart';
 
 class DetailsPage extends StatelessWidget {
-  const DetailsPage({super.key, required this.agenda});
+  const DetailsPage(
+      {super.key,
+      required this.agenda,
+      required this.scheduleStore,
+      required this.authStore});
 
   final ScheduleModel agenda;
+  final ScheduleStore scheduleStore;
+  final AuthStore authStore;
 
   @override
   Widget build(BuildContext context) {
@@ -103,9 +115,24 @@ class DetailsPage extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(15.0),
-                  child: CustomButtonStandard(
+                  child: CustomButtonCreateStandard(
                     onTap: () {
-                      
+                      scheduleStore.dropdownTimesValue = agenda.scheduleTo;
+                      scheduleStore.dateInit =
+                          DateTime.parse(agenda.dateSchedule);
+                      scheduleStore.nameController.text = agenda.victimName;
+                      scheduleStore.cityController.text = agenda.city;
+                      scheduleStore.stateController.text = agenda.state;
+                      scheduleStore.streetController.text = agenda.street;
+                      scheduleStore.numberController.text = agenda.number;
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditNewSchedule(
+                                id: agenda.id!,
+                                scheduleStore: scheduleStore,
+                                authStore: authStore)),
+                      );
                     },
                     color: Helpers.colorEdit,
                     isLoading: true,
@@ -116,8 +143,13 @@ class DetailsPage extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
-                  child: CustomButtonStandard(
-                    onTap: () {},
+                  child: CustomButtonCreateStandard(
+                    onTap: () async {
+                      await scheduleStore.delete(agenda.id!);
+                      scheduleStore.getAllPeriods();
+                      Modular.to.pop();
+                      MessagesUi().snackUi(context, "Excluido com Sucesso!");
+                    },
                     color: Colors.red,
                     isLoading: true,
                     text: "Excluir",

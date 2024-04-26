@@ -21,7 +21,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   verificationAuth() async {
-    Modular.to.pushReplacementNamed('/experweb/home');
+    Modular.to.pushReplacementNamed('/auth/login');
   }
 
   @override

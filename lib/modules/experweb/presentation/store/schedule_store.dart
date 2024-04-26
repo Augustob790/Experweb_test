@@ -33,6 +33,7 @@ abstract class _ScheduleStoreBase with Store {
     stateController.clear();
     numberController.clear();
     streetController.clear();
+    cityController.clear();
     dropdownTimesValue = 'Horários';
   }
 
