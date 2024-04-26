@@ -59,10 +59,10 @@ class DetailsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
-            Padding(
+             Padding(
               padding: const EdgeInsets.all(10.0),
               child: CustomText(
-                text: "Cidade: ${agenda.city}",
+                text: "Nome: ${agenda.victimName}",
                 color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -72,7 +72,17 @@ class DetailsPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: CustomText(
-                text: "Estado: ${agenda.state}",
+                text: "Horário: ${agenda.scheduleTo}",
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                height: 0.3,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CustomText(
+                text: "Data: ${Helpers.formatDateForBR(agenda.dateSchedule)}",
                 color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -93,6 +103,26 @@ class DetailsPage extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: CustomText(
                 text: "Número: ${agenda.number}",
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                height: 0.3,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CustomText(
+                text: "Cidade: ${agenda.city}",
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                height: 0.3,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CustomText(
+                text: "Estado: ${agenda.state}",
                 color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,

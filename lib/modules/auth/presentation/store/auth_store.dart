@@ -2,8 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../domain/model/user_model.dart';
+import '../../domain/usecases/check_data_user_use_case.dart';
 import '../../domain/usecases/get_user_login_use_case.dart';
 
 part 'auth_store.g.dart';
@@ -12,9 +14,11 @@ class AuthStore = _AuthStoreBase with _$AuthStore;
 
 abstract class _AuthStoreBase with Store {
   final GetUserLoginUsecase getUserLoginUsecase;
+  final CheckDataUserUsecase checkDataUserUsecase;
   final loginFormKey = GlobalKey<FormState>();
 
   _AuthStoreBase({
+    required this.checkDataUserUsecase,
     required this.getUserLoginUsecase,
   });
 
@@ -35,6 +39,7 @@ abstract class _AuthStoreBase with Store {
 
   @action
   logout() async {
+    deletePreferenceUserUsecase();
     Modular.to.pushReplacementNamed('/auth/login');
   }
 
@@ -56,5 +61,28 @@ abstract class _AuthStoreBase with Store {
       isLoading = "error";
       throw e.toString();
     }
+  }
+
+  @action
+  Future<UserModel> checkDataUser() async {
+    isLoading = "isLoading";
+    try {
+      final response = await checkDataUserUsecase();
+      userModel = response;
+      isLoading = "sucess";
+      return userModel!;
+    } catch (e) {
+      isLoading = "error";
+      throw e.toString();
+    }
+  }
+
+  @action
+  Future<void> deletePreferenceUserUsecase() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('email');
+    prefs.remove('id');
+    prefs.remove('name');
+    prefs.remove('password');
   }
 }

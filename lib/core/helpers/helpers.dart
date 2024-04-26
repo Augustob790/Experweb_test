@@ -19,6 +19,18 @@ class Helpers {
   static const colorPrimary = Color.fromRGBO(11, 28, 43, 1);
   static const colorEdit = Color.fromARGB(247, 15, 40, 139);
 
+
+  static formatDateForBR(String dateTime) {
+    final date = DateTime.parse(dateTime);
+    String day = "";
+    String month = "";
+    String year = "";
+    day = date.day.toString();
+    month = date.month.toString();
+    year = date.year.toString();
+    return "$day/$month/$year";
+  }
+
   static String formatDateForBRDate(DateTime dateTime) {
     List<String> months = [
       "jan.",

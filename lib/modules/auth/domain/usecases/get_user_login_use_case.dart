@@ -1,4 +1,4 @@
-import '../../ data/repositories/login_repository.dart';
+import '../../ data/repositories/auth_repository.dart';
 import '../exception/user_exception.dart';
 import '../model/user_model.dart';
 

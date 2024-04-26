@@ -25,10 +25,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   @override
+  void initState() {
+    super.initState();
+    widget.authStore.deletePreferenceUserUsecase();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final loginFormKey = GlobalKey<FormState>();
-    // TextEditingController emailController = TextEditingController();
-    // TextEditingController passwordController = TextEditingController();
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
@@ -59,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: InputPersonalized(
                         icon: const Icon(Icons.person_outlined,
                             color: Colors.white),
-                        controller:  widget.authStore.emailController,
+                        controller: widget.authStore.emailController,
                         labelText: 'E-mail',
                         keyboardType: TextInputType.emailAddress,
                         autovalidateMode: AutovalidateMode.disabled,
@@ -115,23 +119,27 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.all(15.0),
                       child: CustomButtonStandard(
                         onTap: () async {
-                            if (loginFormKey.currentState!.validate()) {
-                              try {
-                                await widget.authStore.login(widget.authStore.emailController.text,widget.authStore.passwordController.text);
-                                Modular.to.pushReplacementNamed('/experweb/home');
-                                widget.authStore.dispose();
-                              } catch (e) {
-                                ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
-                                  size: size,
-                                  message: '$e',
-                               ));
-                              }
-                            } else {
-                             ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                          if (loginFormKey.currentState!.validate()) {
+                            try {
+                              await widget.authStore.login(
+                                  widget.authStore.emailController.text,
+                                  widget.authStore.passwordController.text);
+                              Modular.to.pushReplacementNamed('/experweb/home');
+                              widget.authStore.dispose();
+                            } catch (e) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(CustomSnackBar(
                                 size: size,
-                                message: 'Prencha todos os campos!',
-                            ));
+                                message: '$e',
+                              ));
                             }
+                          } else {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(CustomSnackBar(
+                              size: size,
+                              message: 'Prencha todos os campos!',
+                            ));
+                          }
                         },
                         color: const Color(0xFF947CCD),
                         isLoading: true,

@@ -37,10 +37,6 @@ class CustomButtonCreateStandard extends StatelessWidget {
           color: color,
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           border: Border.all(width: 0.2, color: Colors.black),
-          // gradient: const LinearGradient(end: Alignment(0, 1), colors: [
-          //   Color.fromRGBO(27, 44, 59, 1),
-          //   Color.fromRGBO(11, 28, 43, 1),
-          // ]),
         ),
         child: Center(
           child: isLoading

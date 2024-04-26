@@ -113,6 +113,24 @@ mixin _$AuthStore on _AuthStoreBase, Store {
     return _$loginAsyncAction.run(() => super.login(email, password));
   }
 
+  late final _$checkDataUserAsyncAction =
+      AsyncAction('_AuthStoreBase.checkDataUser', context: context);
+
+  @override
+  Future<UserModel> checkDataUser() {
+    return _$checkDataUserAsyncAction.run(() => super.checkDataUser());
+  }
+
+  late final _$deletePreferenceUserUsecaseAsyncAction = AsyncAction(
+      '_AuthStoreBase.deletePreferenceUserUsecase',
+      context: context);
+
+  @override
+  Future<void> deletePreferenceUserUsecase() {
+    return _$deletePreferenceUserUsecaseAsyncAction
+        .run(() => super.deletePreferenceUserUsecase());
+  }
+
   @override
   String toString() {
     return '''

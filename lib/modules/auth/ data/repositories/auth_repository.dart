@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:experweb_app/core/const/api.dart';
 import 'package:experweb_app/modules/auth/domain/model/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class AuthRepository {
   Future<UserModel> login(String email, String password);
+  Future<UserModel> checkDataSave();
 }
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -18,6 +20,7 @@ class AuthRepositoryImpl implements AuthRepository {
       for (var satisfactionSurvey in response.data) {
         userModel.add(UserModel.fromJson(satisfactionSurvey));
       }
+      await saveDataUser(userModel.first);
       return userModel.first;
     } on DioException catch (e) {
       if (e.type == DioExceptionType.connectionTimeout ||
@@ -30,6 +33,39 @@ class AuthRepositoryImpl implements AuthRepository {
       }
     } catch (e) {
       throw Exception("Falha no login. Por favor, tente novamente: $e");
+    }
+  }
+
+  Future<void> saveDataUser(UserModel user) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('id', user.id);
+    prefs.setString('name', user.name);
+    prefs.setString('email', user.email);
+    prefs.setString('password', user.password);
+  }
+
+  @override
+  Future<UserModel> checkDataSave() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if (prefs.containsKey('id') &&
+        prefs.containsKey('name') &&
+        prefs.containsKey('email') &&
+        prefs.containsKey('password')) {
+      var map = {
+        'id': prefs.getString('id') ?? "",
+        'name': prefs.getString('name') ?? '',
+        'email': prefs.getString('email') ?? '',
+        'password': prefs.getString('password') ?? '',
+      };
+      return UserModel.fromJson(map);
+    } else {
+      return UserModel(
+        name: "",
+        email: "",
+        password: "",
+        id: "",
+      );
     }
   }
 }
