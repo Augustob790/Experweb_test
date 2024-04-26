@@ -232,13 +232,14 @@ class _EditNewScheduleState extends State<EditNewSchedule> {
                                 );
                                 widget.scheduleStore.dispose();
                                 await widget.scheduleStore.getAllPeriods();
-                                MessagesUi().snackUi(context, "Editado com sucesso!");
-                                Navigator.pop(context);
+                                Modular.to.pushNamedAndRemoveUntil(
+                                    '/experweb/home', (route) => false);
                               } catch (e) {
                                 MessagesUi().snackE(context, e.toString());
                               }
                             } else {
-                              MessagesUi().snackUi(context, "Prencha todos os campos!");
+                              MessagesUi()
+                                  .snackUi(context, "Prencha todos os campos!");
                             }
                           },
                           color: const Color(0xFF947CCD),

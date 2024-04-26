@@ -40,7 +40,7 @@ abstract class _AuthStoreBase with Store {
   @action
   logout() async {
     deletePreferenceUserUsecase();
-    Modular.to.pushReplacementNamed('/auth/login');
+    Modular.to.pushNamedAndRemoveUntil('/auth/login', (route) => false);
   }
 
   @action

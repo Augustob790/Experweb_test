@@ -8,7 +8,6 @@ import '../../../../core/helpers/helpers.dart';
 import '../../../../core/widgets/custom_calendar.dart';
 import '../../../../core/widgets/custom_list_tile.dart';
 import '../../presentation/store/schedule_store.dart';
-import '../create_account/create_schedule_page.dart';
 import '../details/details_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -59,7 +58,7 @@ class _HomePageState extends State<HomePage> {
       body: Observer(builder: (context) {
         return Column(
           children: [
-            const CustomCalendar(),
+            CustomCalendar(eventsList: widget.scheduleStore.eventsList),
             const SizedBox(height: 10),
             Expanded(
               child: ListView.separated(
@@ -92,13 +91,7 @@ class _HomePageState extends State<HomePage> {
       }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => AddNewSchudule(
-                    authStore: widget.authStore,
-                    scheduleStore: widget.scheduleStore)),
-          );
+          Modular.to.pushReplacementNamed('/experweb/addschedule');
         },
         backgroundColor: Colors.white, // Cor de fundo do botão
         shape: const CircleBorder(),

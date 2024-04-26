@@ -7,9 +7,7 @@ import 'modules/experweb/experweb_module.dart';
 class AppModule extends Module {
   @override
   List<Module> get imports => [
-        AuthModule(),
-        ExperwebModule(),
-      ];
+        AuthModule()];
 
   @override
   void routes(RouteManager r) {

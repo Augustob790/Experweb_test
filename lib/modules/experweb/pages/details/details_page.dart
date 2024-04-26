@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, must_be_immutable
 
 import 'package:experweb_app/modules/auth/presentation/store/auth_store.dart';
 import 'package:experweb_app/modules/experweb/pages/edit/edit_schedule_page.dart';
@@ -12,17 +12,22 @@ import '../../../../core/widgets/scaffold_mensseger_ui.dart';
 import '../../domain/model/schedule_model.dart';
 import 'widgets/custom_button_create.dart';
 
-class DetailsPage extends StatelessWidget {
-  const DetailsPage(
+class DetailsPage extends StatefulWidget {
+  DetailsPage(
       {super.key,
-      required this.agenda,
+      this.agenda,
       required this.scheduleStore,
       required this.authStore});
 
-  final ScheduleModel agenda;
+  ScheduleModel? agenda;
   final ScheduleStore scheduleStore;
   final AuthStore authStore;
 
+  @override
+  State<DetailsPage> createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -40,7 +45,7 @@ class DetailsPage extends StatelessWidget {
           ),
         ),
         title: CustomText(
-            text: "${agenda.scheduleTo} - ${agenda.victimName}",
+            text: "${widget.agenda?.scheduleTo} - ${widget.agenda?.victimName}",
             color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -59,10 +64,10 @@ class DetailsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
-             Padding(
+            Padding(
               padding: const EdgeInsets.all(10.0),
               child: CustomText(
-                text: "Nome: ${agenda.victimName}",
+                text: "Nome: ${widget.agenda?.victimName}",
                 color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -72,7 +77,7 @@ class DetailsPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: CustomText(
-                text: "Horário: ${agenda.scheduleTo}",
+                text: "Horário: ${widget.agenda?.scheduleTo}",
                 color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -82,7 +87,8 @@ class DetailsPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: CustomText(
-                text: "Data: ${Helpers.formatDateForBR(agenda.dateSchedule)}",
+                text:
+                    "Data: ${Helpers.formatDateForBR(widget.agenda!.dateSchedule)}",
                 color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -92,7 +98,7 @@ class DetailsPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: CustomText(
-                text: "Rua: ${agenda.street}",
+                text: "Rua: ${widget.agenda?.street}",
                 color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -102,7 +108,7 @@ class DetailsPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: CustomText(
-                text: "Número: ${agenda.number}",
+                text: "Número: ${widget.agenda?.number}",
                 color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -112,7 +118,7 @@ class DetailsPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: CustomText(
-                text: "Cidade: ${agenda.city}",
+                text: "Cidade: ${widget.agenda?.city}",
                 color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -122,7 +128,7 @@ class DetailsPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: CustomText(
-                text: "Estado: ${agenda.state}",
+                text: "Estado: ${widget.agenda?.state}",
                 color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -147,21 +153,27 @@ class DetailsPage extends StatelessWidget {
                   padding: const EdgeInsets.all(15.0),
                   child: CustomButtonCreateStandard(
                     onTap: () {
-                      scheduleStore.dropdownTimesValue = agenda.scheduleTo;
-                      scheduleStore.dateInit =
-                          DateTime.parse(agenda.dateSchedule);
-                      scheduleStore.nameController.text = agenda.victimName;
-                      scheduleStore.cityController.text = agenda.city;
-                      scheduleStore.stateController.text = agenda.state;
-                      scheduleStore.streetController.text = agenda.street;
-                      scheduleStore.numberController.text = agenda.number;
-                      Navigator.push(
+                      widget.scheduleStore.dropdownTimesValue =
+                          widget.agenda!.scheduleTo;
+                      widget.scheduleStore.dateInit =
+                          DateTime.parse(widget.agenda!.dateSchedule);
+                      widget.scheduleStore.nameController.text =
+                          widget.agenda!.victimName;
+                      widget.scheduleStore.cityController.text =
+                          widget.agenda!.city;
+                      widget.scheduleStore.stateController.text =
+                          widget.agenda!.state;
+                      widget.scheduleStore.streetController.text =
+                          widget.agenda!.street;
+                      widget.scheduleStore.numberController.text =
+                          widget.agenda!.number;
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => EditNewSchedule(
-                                id: agenda.id!,
-                                scheduleStore: scheduleStore,
-                                authStore: authStore)),
+                                id: widget.agenda!.id!,
+                                scheduleStore: widget.scheduleStore,
+                                authStore: widget.authStore)),
                       );
                     },
                     color: Helpers.colorEdit,
@@ -175,10 +187,10 @@ class DetailsPage extends StatelessWidget {
                   padding: const EdgeInsets.all(15.0),
                   child: CustomButtonCreateStandard(
                     onTap: () async {
-                      await scheduleStore.delete(agenda.id!);
-                      scheduleStore.getAllPeriods();
+                      await widget.scheduleStore.delete(widget.agenda!.id!);
+                      widget.scheduleStore.getAllPeriods();
                       MessagesUi().snackUi(context, "Excluido com Sucesso!");
-                      Navigator.pop(context);
+                      Modular.to.pop();
                     },
                     color: Colors.red,
                     isLoading: true,

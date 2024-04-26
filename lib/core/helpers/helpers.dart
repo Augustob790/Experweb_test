@@ -19,7 +19,6 @@ class Helpers {
   static const colorPrimary = Color.fromRGBO(11, 28, 43, 1);
   static const colorEdit = Color.fromARGB(247, 15, 40, 139);
 
-
   static formatDateForBR(String dateTime) {
     final date = DateTime.parse(dateTime);
     String day = "";
@@ -29,6 +28,14 @@ class Helpers {
     month = date.month.toString();
     year = date.year.toString();
     return "$day/$month/$year";
+  }
+
+  static convertDateStringForDateTime(String dataString) {
+    DateTime data = DateTime.parse(dataString);
+    int ano = data.year;
+    int mes = data.month;
+    int dia = data.day;
+    return DateTime(ano, mes, dia);
   }
 
   static String formatDateForBRDate(DateTime dateTime) {

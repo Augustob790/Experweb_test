@@ -7,7 +7,9 @@ import '../helpers/helpers.dart';
 import 'custom_text.dart';
 
 class CustomCalendar extends StatefulWidget {
-  const CustomCalendar({super.key});
+  const CustomCalendar({super.key, required this.eventsList});
+
+  final Map<DateTime, List> eventsList;
 
   @override
   State<CustomCalendar> createState() => _CustomCalendarState();
@@ -18,7 +20,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
   late DateTime _lastDay;
   late DateTime _focusedDay;
 //late DateTime _selectedDay;
-  Map<DateTime, List> _eventsList = {};
+  //Map<DateTime, List> _eventsList = {};
 
   @override
   void initState() {
@@ -26,13 +28,13 @@ class _CustomCalendarState extends State<CustomCalendar> {
     _focusedDay = DateTime.now();
 // _selectedDay = DateTime.now();
     _firstDay = DateTime.utc(2024, 1, 1);
-    _lastDay =  DateTime.utc(2024, 12, 31);
-    _eventsList = {
-      DateTime(2024, 4, 5): ['Evento 1'],
-      DateTime(2024, 4, 12): ['Evento 2'],
-      DateTime(2024, 4, 15): ['Evento 3'],
-      DateTime(2024, 4, 17): ['Evento 4']
-    };
+    _lastDay = DateTime.utc(2024, 12, 31);
+    // _eventsList = {
+    //   DateTime(2024, 4, 5): ['Evento 1'],
+    //   DateTime(2024, 4, 12): ['Evento 2'],
+    //   DateTime(2024, 4, 15): ['Evento 3'],
+    //   DateTime(2024, 4, 17): ['Evento 4']
+    // };
   }
 
   int getHashCode(DateTime key) {
@@ -44,7 +46,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
     final events = LinkedHashMap<DateTime, List>(
       equals: isSameDay,
       hashCode: getHashCode,
-    )..addAll(_eventsList);
+    )..addAll(widget.eventsList);
 
     List getEventForDay(DateTime day) {
       return events[day] ?? [];
@@ -75,19 +77,24 @@ class _CustomCalendarState extends State<CustomCalendar> {
             ),
             headerStyle: HeaderStyle(
               titleCentered: true,
-              titleTextStyle:
-                  const TextStyle(fontSize: 17.0, color: Colors.white, fontWeight: FontWeight.bold),
+              titleTextStyle: const TextStyle(
+                  fontSize: 17.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
               titleTextFormatter: (date, locale) =>
                   Helpers.monthsName[date.month]!,
               formatButtonVisible: false,
-              leftChevronIcon: const Icon(Icons.chevron_left, color: Colors.white),
-              rightChevronIcon: const Icon(Icons.chevron_right, color: Colors.white),
+              leftChevronIcon:
+                  const Icon(Icons.chevron_left, color: Colors.white),
+              rightChevronIcon:
+                  const Icon(Icons.chevron_right, color: Colors.white),
             ),
             calendarStyle: const CalendarStyle(
               markersAlignment: Alignment.topCenter,
               defaultTextStyle: TextStyle(color: Colors.white),
               weekendTextStyle: TextStyle(color: Colors.white),
-              markerDecoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+              markerDecoration:
+                  BoxDecoration(color: Colors.white, shape: BoxShape.circle),
               todayDecoration: BoxDecoration(
                   color: Color.fromARGB(255, 2, 9, 14), shape: BoxShape.circle),
             ),

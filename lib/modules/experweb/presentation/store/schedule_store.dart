@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../../core/helpers/helpers.dart';
 import '../../domain/model/schedule_model.dart';
 import '../../domain/usecases/delete_schedule.dart';
 import '../../domain/usecases/get_all_schedule.dart';
@@ -75,11 +76,24 @@ abstract class _ScheduleStoreBase with Store {
   ObservableList<ScheduleModel> scheduleModelList =
       ObservableList<ScheduleModel>();
 
+  Map<DateTime, List> eventsList = {};
+
+  @action
+  void addEvents(String data) {
+    DateTime dateTime = Helpers.convertDateStringForDateTime(data);
+    if (!eventsList.containsKey(dateTime)) {
+      eventsList[dateTime] = ["Evento"];
+    } else {
+      eventsList[dateTime]!.add("Evento");
+    }
+  }
+
   @action
   Future<void> insert(ScheduleModel schedule) async {
     isLoading = "isLoading";
     try {
       await insertScheduleUsecase(schedule);
+      addEvents(schedule.dateSchedule);
       isLoading = "sucess";
     } catch (e) {
       isLoading = "error";
@@ -126,7 +140,7 @@ abstract class _ScheduleStoreBase with Store {
   }
 
   @action
-  void initializeInit(DateTime dateTime) async {
+  Future<void> initializeInit(DateTime dateTime) async {
     dateInit = dateTime;
   }
 
@@ -134,4 +148,5 @@ abstract class _ScheduleStoreBase with Store {
   void onSelectedCategory(String category) {
     dropdownTimesValue = category;
   }
+
 }

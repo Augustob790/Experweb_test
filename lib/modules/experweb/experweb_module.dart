@@ -6,6 +6,7 @@ import 'domain/usecases/delete_schedule.dart';
 import 'domain/usecases/get_all_schedule.dart';
 import 'domain/usecases/insert_schedule.dart';
 import 'domain/usecases/update_schedule.dart';
+import 'pages/create_account/create_schedule_page.dart';
 import 'pages/home/home_page.dart';
 import 'presentation/store/schedule_store.dart';
 
@@ -28,6 +29,7 @@ class ExperwebModule extends Module {
     r.child("/home",
         child: (_) =>
             HomePage(authStore: Modular.get(), scheduleStore: Modular.get()));
+    r.child("/addschedule",child: (_) => AddNewSchudule(authStore: Modular.get(), scheduleStore: Modular.get()));
     super.routes(r);
   }
 }
